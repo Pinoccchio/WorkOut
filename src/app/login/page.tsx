@@ -1,7 +1,20 @@
+import { Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import AuthForm from "@/components/auth/AuthForm";
 import Link from "next/link";
+
+function AuthFormSuspense({ type }: { type: "login" | "signup" }) {
+  return (
+    <Suspense fallback={
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+      </div>
+    }>
+      <AuthForm type={type} />
+    </Suspense>
+  );
+}
 
 export default function LoginPage() {
   return (
@@ -16,7 +29,7 @@ export default function LoginPage() {
             </span>
           </Link>
           
-          <AuthForm type="login" />
+          <AuthFormSuspense type="login" />
         </div>
       </main>
       
