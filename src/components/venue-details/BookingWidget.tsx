@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 
 interface BookingWidgetProps {
   venueId: number;
@@ -11,6 +12,7 @@ interface BookingWidgetProps {
 
 export default function BookingWidget({ venueId, venueName, pricePerHour }: BookingWidgetProps) {
   const router = useRouter();
+  const { openAuthModal } = useAuthModal();
   const [bookingDetails, setBookingDetails] = useState({
     date: "",
     startTime: "",
@@ -47,8 +49,8 @@ export default function BookingWidget({ venueId, venueName, pricePerHour }: Book
   
   const handleBooking = () => {
     if (!isLoggedIn) {
-      // Redirect to login
-      router.push(`/login?redirect=/venues/${venueId}`);
+      // Open login modal instead of redirecting
+      openAuthModal("login");
       return;
     }
     

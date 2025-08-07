@@ -6,13 +6,20 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import NotificationsCenter from "./NotificationsCenter";
 import UserRoleMenu from "./UserRoleMenu";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const { openAuthModal } = useAuthModal();
   const pathname = usePathname();
   
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleOpenAuthModal = (type: "login" | "signup") => {
+    openAuthModal(type);
+    setIsOpen(false); // Close mobile menu if open
   };
 
   const navLinks = [
@@ -54,12 +61,18 @@ export default function Navigation() {
         <div className="hidden md:flex md:items-center md:space-x-3">
           <UserRoleMenu />
           <NotificationsCenter />
-          <Link href="/login" className="btn-ghost py-2 px-4">
+          <button 
+            onClick={() => handleOpenAuthModal("login")} 
+            className="btn-ghost py-2 px-4"
+          >
             Log In
-          </Link>
-          <Link href="/signup" className="btn-primary py-2 px-4">
+          </button>
+          <button 
+            onClick={() => handleOpenAuthModal("signup")} 
+            className="btn-primary py-2 px-4"
+          >
             Sign Up
-          </Link>
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -169,20 +182,18 @@ export default function Navigation() {
                 </svg>
                 Notifications
               </Link>
-              <Link 
-                href="/login" 
+              <button 
+                onClick={() => handleOpenAuthModal("login")}
                 className="btn-outline w-full text-center"
-                onClick={() => setIsOpen(false)}
               >
                 Log In
-              </Link>
-              <Link 
-                href="/signup" 
+              </button>
+              <button 
+                onClick={() => handleOpenAuthModal("signup")}
                 className="btn-primary w-full text-center"
-                onClick={() => setIsOpen(false)}
               >
                 Sign Up
-              </Link>
+              </button>
               <Link 
                 href="/demo" 
                 className="text-sm text-primary hover:underline text-center"

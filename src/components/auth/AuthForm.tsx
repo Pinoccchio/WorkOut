@@ -61,11 +61,10 @@ export default function AuthForm({ type }: AuthFormProps) {
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 1000));
       
-      // Mock success
-      console.log("Authentication successful");
-      
-      // Redirect user
-      router.push(redirectUrl);
+      // Show not implemented message
+      throw new Error(
+        "Authentication is not yet implemented. Please use the 'Switch view to' menu in the header to access the User Dashboard, Venue Dashboard, or Admin Dashboard to explore the features."
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unexpected error occurred");
     } finally {
@@ -74,7 +73,7 @@ export default function AuthForm({ type }: AuthFormProps) {
   };
   
   return (
-    <div className="w-full max-w-xl mx-auto mt-8 mb-12">
+    <div className="w-full max-w-3xl mx-auto mt-8 mb-12">
       <div className="workout-card overflow-hidden shadow-xl border border-border/40">
         <div className="bg-primary/5 p-6 text-center border-b border-border/20">
           <h1 className="text-2xl font-bold mb-2">
@@ -90,8 +89,24 @@ export default function AuthForm({ type }: AuthFormProps) {
         <div className="p-10 space-y-6">
         
         {error && (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 p-3 rounded-md mb-4 text-sm">
-            {error}
+          <div className={`${
+            error.includes("not yet implemented") 
+              ? "bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400" 
+              : "bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400"
+          } p-4 rounded-md mb-4 text-sm`}>
+            <div className="flex items-start gap-3">
+              <svg className="h-5 w-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+              </svg>
+              <div>
+                {error}
+                {error.includes("not yet implemented") && (
+                  <div className="mt-2 text-xs">
+                    Look for the <strong>"Switch view to"</strong> dropdown in the navigation bar above.
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         )}
         
@@ -207,7 +222,7 @@ export default function AuthForm({ type }: AuthFormProps) {
           
           {/* Login Extras */}
           {type === "login" && (
-            <div className="flex justify-between items-center mt-2">
+            <div className="mt-4 mb-4 space-y-3">
               <div className="flex items-center">
                 <input
                   id="remember-me"
@@ -215,13 +230,13 @@ export default function AuthForm({ type }: AuthFormProps) {
                   type="checkbox"
                   className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-muted-foreground">
+                <label htmlFor="remember-me" className="ml-2 block text-sm font-medium">
                   Remember me
                 </label>
               </div>
               
               <div className="text-sm">
-                <Link href="/forgot-password" className="text-primary hover:underline">
+                <Link href="/forgot-password" className="text-primary hover:underline hover:text-primary/80 transition-colors">
                   Forgot your password?
                 </Link>
               </div>
@@ -280,7 +295,7 @@ export default function AuthForm({ type }: AuthFormProps) {
           </div>
         </div>
         
-        <div className="mt-6 grid grid-cols-2 gap-4">
+        <div className="mt-6">
           <button
             type="button"
             className="flex w-full items-center justify-center gap-3 rounded-md bg-background border border-border py-2 px-3 text-sm font-medium hover:bg-accent transition-colors"
@@ -291,17 +306,7 @@ export default function AuthForm({ type }: AuthFormProps) {
               <path d="M5.26498 14.2949C5.02498 13.5699 4.88501 12.7999 4.88501 11.9999C4.88501 11.1999 5.01998 10.4299 5.26498 9.7049L1.275 6.60986C0.46 8.22986 0 10.0599 0 11.9999C0 13.9399 0.46 15.7699 1.28 17.3899L5.26498 14.2949Z" fill="#FBBC05" />
               <path d="M12.0004 24.0001C15.2404 24.0001 17.9654 22.935 19.9454 21.095L16.0804 18.075C15.0054 18.785 13.6204 19.25 12.0004 19.25C8.8704 19.25 6.2154 17.14 5.2704 14.295L1.2804 17.39C3.2554 21.31 7.3104 24.0001 12.0004 24.0001Z" fill="#34A853" />
             </svg>
-            <span className="text-sm font-medium">Google</span>
-          </button>
-          
-          <button
-            type="button"
-            className="flex w-full items-center justify-center gap-3 rounded-md bg-background border border-border py-2 px-3 text-sm font-medium hover:bg-accent transition-colors"
-          >
-            <svg className="h-5 w-5 text-[#24292F]" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-            </svg>
-            <span className="text-sm font-medium">GitHub</span>
+            <span className="text-sm font-medium">Continue with Google</span>
           </button>
         </div>
       </div>
