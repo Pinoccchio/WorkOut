@@ -1,0 +1,30 @@
+Recommended Image Sources for WorkOut Web App
+
+1. Workspace/Cafe Images:
+   - https://unsplash.com/s/photos/cafe-workspace
+   - https://unsplash.com/s/photos/coworking
+   - https://unsplash.com/s/photos/coffee-shop-work
+
+2. User Profile Images:
+   - https://unsplash.com/s/photos/profile-professional
+   - https://unsplash.com/s/photos/business-person
+
+3. Hero Images:
+   - https://unsplash.com/s/photos/workspace-modern
+   - https://unsplash.com/s/photos/coffee-laptop
+
+4. Food and Beverage Images:
+   - https://unsplash.com/s/photos/coffee-food
+   - https://unsplash.com/s/photos/cafe-food
+
+Download these images and place them in the appropriate folders:
+- Hero images → /images/hero/
+- Venue images → /images/venues/
+- User images → /images/users/
+- Workspace detail images → /images/workspaces/
+
+Recommended file naming:
+- hero-1.jpg, hero-2.jpg, etc.
+- venue-1.jpg, venue-2.jpg, etc.
+- user-1.jpg, user-2.jpg, etc.
+- workspace-1.jpg, workspace-2.jpg, etc.

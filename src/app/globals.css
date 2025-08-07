@@ -1,26 +1,125 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base Colors */
+  --background: 0 0% 100%;
+  --foreground: 215 25% 27%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 25% 27%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 215 25% 27%;
+  
+  /* WorkOut Brand Colors */
+  --workout-coral: 5 93% 67%;  /* Coral Red: #FF5A5F */
+  --workout-navy: 215 33% 23%; /* Navy Blue: #252E3F */
+  --workout-light: 0 0% 98%;   /* Off-white: #FAFAFA */
+  
+  /* UI Elements */
+  --primary: 5 93% 67%;        /* Coral Red */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 33% 23%;    /* Navy Blue */
+  --secondary-foreground: 0 0% 100%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 215 25% 40%;
+  --accent: 5 100% 95%;        /* Light Coral */
+  --accent-foreground: 5 93% 67%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  
+  /* Border, Input, etc. */
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 5 93% 67%;           /* Coral Red for focus rings */
+  
+  /* Charts & Data Viz */
+  --chart-1: 5 93% 67%;        /* Coral Red */
+  --chart-2: 215 33% 23%;      /* Navy Blue */
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
+  
+  --radius: 0.75rem;           /* Slightly more rounded corners */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  /* Base Colors */
+  --background: 215 35% 12%;    /* Dark Navy */
+  --foreground: 0 0% 98%;
+  --card: 215 30% 15%;          /* Slightly lighter Navy */
+  --card-foreground: 0 0% 98%;
+  --popover: 215 35% 12%;
+  --popover-foreground: 0 0% 98%;
+  
+  /* WorkOut Brand Colors */
+  --workout-coral: 5 93% 67%;   /* Coral Red: #FF5A5F - same as light mode */
+  --workout-navy: 215 33% 16%;  /* Darker Navy: #1A2230 */
+  --workout-light: 215 25% 20%; /* Mid Navy: #252E3F */
+  
+  /* UI Elements */
+  --primary: 5 93% 67%;         /* Coral Red - same as light mode */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 25% 27%;     /* Lighter Navy */
+  --secondary-foreground: 0 0% 98%;
+  --muted: 215 30% 20%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 5 80% 25%;          /* Dark Coral */
+  --accent-foreground: 5 93% 67%;
+  --destructive: 0 62.8% 40.6%;
+  --destructive-foreground: 0 0% 98%;
+  
+  /* Border, Input, etc. */
+  --border: 215 25% 27%;
+  --input: 215 25% 27%;
+  --ring: 5 93% 67%;            /* Coral Red for focus rings */
+  
+  /* Charts & Data Viz */
+  --chart-1: 5 93% 67%;         /* Coral Red */
+  --chart-2: 210 60% 60%;       /* Brighter Blue for contrast */
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: hsl(var(--border));
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-feature-settings: "ss01", "ss02", "ss03", "ss04", "cv01", "cv02", "cv03", "cv04";
+}
+
+@layer base {
+  /* Custom WorkOut Components */
+  .workout-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .workout-card {
+    @apply bg-card text-card-foreground rounded-[var(--radius)] border border-border shadow-sm overflow-hidden;
+  }
+  
+  .workout-card-hover {
+    @apply workout-card transition-all duration-300 hover:shadow-md hover:border-primary/20;
+  }
+
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground rounded-full px-5 py-3 font-medium transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground rounded-full px-5 py-3 font-medium transition-colors hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+  
+  .btn-outline {
+    @apply border border-input bg-transparent hover:bg-accent hover:text-accent-foreground rounded-full px-5 py-3 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+  
+  .btn-ghost {
+    @apply text-foreground hover:bg-accent hover:text-accent-foreground rounded-full px-5 py-3 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
 }
